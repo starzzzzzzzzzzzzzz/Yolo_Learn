@@ -22,7 +22,7 @@ class Darknet19(nn.Module):
         self.conv1 = nn.Conv2d(3, 32, 3, 1, 1, bias=False)
         self.bn1 = nn.BatchNorm2d(32)
         self.pool1 = nn.MaxPool2d(2, 2)
-        
+
         # Conv Block 2: 32 → 64
         self.conv2 = nn.Conv2d(32, 64, 3, 1, 1, bias=False)
         self.bn2 = nn.BatchNorm2d(64)
@@ -74,7 +74,7 @@ class Darknet19(nn.Module):
         # 分类层
         self.conv19 = nn.Conv2d(1024, num_classes, 1, 1, 0)
         self.pool6 = nn.AdaptiveAvgPool2d(1)
-    
+
     def forward(self, x):
         """
         前向传播
@@ -83,23 +83,23 @@ class Darknet19(nn.Module):
         # Block 1
         x = F.leaky_relu(self.bn1(self.conv1(x)), 0.1)
         x = self.pool1(x)
-        
+
         # Block 2
         x = F.leaky_relu(self.bn2(self.conv2(x)), 0.1)
         x = self.pool2(x)
-        
+
         # Block 3
         x = F.leaky_relu(self.bn3(self.conv3(x)), 0.1)
         x = F.leaky_relu(self.bn4(self.conv4(x)), 0.1)
         x = F.leaky_relu(self.bn5(self.conv5(x)), 0.1)
         x = self.pool3(x)
-        
+
         # Block 4
         x = F.leaky_relu(self.bn6(self.conv6(x)), 0.1)
         x = F.leaky_relu(self.bn7(self.conv7(x)), 0.1)
         x = F.leaky_relu(self.bn8(self.conv8(x)), 0.1)
         x = self.pool4(x)
-        
+
         # Block 5
         x = F.leaky_relu(self.bn9(self.conv9(x)), 0.1)
         x = F.leaky_relu(self.bn10(self.conv10(x)), 0.1)
@@ -120,4 +120,4 @@ class Darknet19(nn.Module):
         x = self.pool6(x)
         x = x.view(x.size(0), -1)  # Flatten
         
-        return x
+            return x
